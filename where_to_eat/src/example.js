@@ -4,16 +4,22 @@ import App from './App';
 
 export default class Catalog extends Component {
     render() {
-        var items = [];
-        for( var i = 0; i < 24; i++) {
-            items.push(<Example name={i} price={i} comm={i}/>);
-        }
+        let data = [
+            {"Name":111,"Price":2.5},
+            {"Name":222,"Price":3.5},
+        ];
+        let list;
+        list = data.map(function (item, index) {
+                return (
+                    <Example key={index} name={item.Name} price={item.Price}/>
+                )
+            });
+
         return (
-            <div>
-                { items }
-            </div>
-        )
+            list
+        );
     }
+
 }
 
 export  class Example extends Component {
