@@ -1,4 +1,75 @@
 import React, { Component }from 'react';
+import "./example.css"
+export class Star extends React.Component {//路过点击和走开都要传值
+  constructor(props) {
+    super(props);
+    this.state = {value:this.props.num,hold:0};
+    this.handleStarClick= this.handleStarClick.bind(this);
+    this.handleGoStar = this.handleGoStar.bind(this);
+    this.handleLeaveStar = this.handleLeaveStar.bind(this);
+  }
+  handleStarClick() {//鼠标点击,同时会调用onmouseout,改变tempnum值点亮星星
+    if (this.props.onSubmit) {
+        const {value} = this.state
+        this.props.onSubmit({value});
+        alert("感谢您的评分");
+        }
+  }
+
+  handleGoStar(){ //鼠标经过点亮星星。
+       if(this.props.onSubmit){
+         const {value} = this.state
+         this.props.onSubmit({value});
+       } //传入的值为正，就是finalnum
+     }
+     handleLeaveStar() { //鼠标离开时星星变暗
+       if(this.props.onSubmit){
+         this.setState({})
+         const {hold} = this.state
+         this.props.onSubmit(hold);
+       }  //传入值为0，finalnum为tempnum,初始为0
+     }
+  render(){
+    let list = <div></div>
+    const show = this.props.show;
+    if(show >= this.state.value || this.state.value == 1){
+      list=<li class="star light" onClick={this.handleStarClick} onMouseOver={this.handleGoStar} onMouseOut={this.handleLeaveStar}><a href="javascript:;">  </a></li>
+    }
+    else{
+      list=<li class="star" onClick={this.handleStarClick} onMouseOver={this.handleGoStar} onMouseOut={this.handleLeaveStar}><a href="javascript:;">  </a></li>
+    }
+    return(list);
+  }
+}
+export class Stars extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {num:0,tempnum:0,finalnum:0};
+    this.fnShow = this.fnShow.bind(this);
+  }
+
+  fnShow(comment) {
+    if(!comment.value)
+    {
+      this.setState({num:comment.hold});
+    }
+    else{
+      this.setState({num:comment.value});
+    }
+  }
+
+  render(){
+        return (
+            <div>
+            <Star num={1} show={this.state.num} onSubmit={this.fnShow} />
+            <Star num={2} show={this.state.num} onSubmit={this.fnShow} />
+            <Star num={3} show={this.state.num} onSubmit={this.fnShow} />
+            <Star num={4} show={this.state.num} onSubmit={this.fnShow} />
+            <Star num={5} show={this.state.num} onSubmit={this.fnShow} />
+            </div>
+        );
+  }
+}
 export class CommentInput extends React.Component {
   constructor(props) {
     super(props);
@@ -90,7 +161,7 @@ export class ReviewModel extends React.Component {
 
   render() {
     const isView = this.state.isView;
-    let previous = <div>noi</div>
+    let previous = <div>noi</div>;
     let button = null;
     let review = <div></div>;
     if (isView) {
@@ -165,6 +236,7 @@ export default class Catalog extends Component {
                   <div>
                     <Example key={index} name={item.Name} price={item.Price}/>
                     <ReviewModel />
+                    <Stars />
                   </div>
                 )
             });
