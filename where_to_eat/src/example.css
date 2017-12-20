@@ -27,3 +27,8 @@ ul li a {
 .light {
   background-position: 0 -29px;
 }
+
+.imgSize {
+    height: auto;
+    width: auto;
+}
