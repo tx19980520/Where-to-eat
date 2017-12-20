@@ -1,5 +1,6 @@
 import React, { Component }from 'react';
 import "./example.css"
+
 export class Star extends React.Component {//路过点击和走开都要传值
   constructor(props) {
     super(props);
@@ -223,39 +224,147 @@ function NotReviewButton(props) {
 }
 
 
+const listData = [
+    {"idd":1,"Name":111,"Price":2.5},
+    {"idd":2,"Name":222,"Price":3.5},
+    {"idd":3,"Name":333,"Price":2.5},
+    {"idd":4,"Name":4,"Price":3.5},
+    {"idd":5,"Name":5,"Price":2.5},
+    {"idd":6,"Name":6,"Price":3.5},
+    {"idd":7,"Name":7,"Price":2.5},
+    {"idd":8,"Name":8,"Price":3.5},
+    {"idd":9,"Name":9,"Price":2.5},
+    {"idd":10,"Name":10,"Price":3.5},
 
-export default class Catalog extends Component {
-    render() {
-        let data = [
-            {"Name":111,"Price":2.5},
-            {"Name":222,"Price":3.5},
-        ];
-        let list;
-        list = data.map(function (item, index) {
-                return (
-                  <div>
-                    <Example key={index} name={item.Name} price={item.Price}/>
-                    <ReviewModel />
-                    <Stars />
-                  </div>
-                )
-            });
+]
 
-        return (
-            list
-        );
+export default class ListBox extends Component {
+
+    constructor(props){
+        super(props);
+        this.pageNext=this.pageNext.bind(this);
+        this.setPage=this.setPage.bind(this);
+        this.state = {
+            indexList:[],//当前渲染的页面数据
+            totalData:listData,
+            current: 1, //当前页码
+            pageSize:4, //每页显示的条数
+            goValue:0,  //要去的条数index
+            totalPage:0,//总页数
+        };
+
     }
 
-}
+    componentWillMount(){
+        //设置总页数
+        this.setState({
+            totalPage:Math.ceil( this.state.totalData.length/this.state.pageSize),
+        })
+        this.pageNext(this.state.goValue)
 
-export  class Example extends Component {
+    }
+
+    //设置内容
+    setPage(num){
+        this.setState({
+            indexList:this.state.totalData.slice(num,num+this.state.pageSize)
+        })
+    }
+
+
+    pageNext (num) {
+        this.setPage(num)
+    }
+
+
+
     render() {
+
         return (
             <div>
-                <p>Name:{ this.props.name }</p>
-                <p>Price:{ this.props.price }</p>
-                <p>Comment:{ this.props.comm }</p>
+                <div>
+                    <ul>
+                        {this.state.indexList.map(function (cont) {
+                            return <List {...cont} />
+                        })}
+                    </ul>
+
+                    <PageButton { ...this.state } pageNext={this.pageNext} />
+
+                </div>
             </div>
-        )
+        );
+    }
+}
+
+
+class List extends Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        const { idd, Name, Price } = this.props
+
+        return (
+            <li id={idd}>
+                <br></br>
+                    <div>
+                        <p>Name:{ Name }</p>
+                        <p>Price:{ Price }</p>
+                        <ReviewModel />
+                        <Stars />
+                    </div>
+            </li>
+        );
+    }
+}
+
+class PageButton extends Component {
+
+    constructor(props) {
+        super(props);
+        this.setNext=this.setNext.bind(this);
+        this.setUp=this.setUp.bind(this);
+        this.state={
+            num: 0,
+            pagenum:this.props.current
+        }
+    }
+
+    //下一页
+    setNext(){
+        if(this.state.pagenum < this.props.totalPage){
+            this.setState({
+                num:this.state.num + this.props.pageSize,
+                pagenum:this.state.pagenum + 1
+            },function () {
+                console.log(this.state)
+                this.props.pageNext(this.state.num)
+            })
+        }
+    }
+
+    //上一页
+    setUp(){
+        if(this.state.pagenum > 1){
+            this.setState({
+                num:this.state.num - this.props.pageSize,
+                pagenum:this.state.pagenum - 1
+            },function () {
+                console.log(this.state)
+                this.props.pageNext(this.state.num)
+            })
+        }
+    }
+
+    render() {
+        return (
+            <div className="change_page">
+                <span onClick={ this.setUp } >上一页</span>
+                <span>{ this.state.pagenum }页/ { this.props.totalPage }页</span>
+                <span onClick={ this.setNext }>下一页</span>
+            </div>
+        );
     }
 }
