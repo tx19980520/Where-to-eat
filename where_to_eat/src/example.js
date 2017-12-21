@@ -354,9 +354,9 @@ class PageButton extends Component {
     render() {
         return (
             <div className="change_page">
-                <span onClick={ this.setUp } >上一页</span>
+                <button onClick={ this.setUp } >上一页</button>
                 <span>{ this.state.pagenum }页/ { this.props.totalPage }页</span>
-                <span onClick={ this.setNext }>下一页</span>
+                <button onClick={ this.setNext }>下一页</button>
             </div>
         );
     }
