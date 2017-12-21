@@ -224,18 +224,9 @@ function NotReviewButton(props) {
   );
 }
 
+var Data = eval(constantData);
 
-const listData = [
-    {"name":"巧克力法国","price":"10元","img":"https://github.com/tx19980520/Where-to-eat/blob/master/canteen_pic/%E5%B7%A7%E5%85%8B%E5%8A%9B%E6%B3%95%E5%9B%BD.jpg?raw=true"},
-    {"name":"抹茶奶酪","price":"9元","img":"https://github.com/tx19980520/Where-to-eat/blob/master/canteen_pic/%E6%8A%B9%E8%8C%B6%E5%A5%B6%E9%85%AA.jpg?raw=true"},
-    {"name":"蔓越莓椰子卷","price":"9元","img":"https://github.com/tx19980520/Where-to-eat/blob/master/canteen_pic/%E8%94%93%E8%B6%8A%E8%8E%93%E6%A4%B0%E5%AD%90%E5%8D%B7.jpg?raw=true"},
-    {"name":"牛奶哈斯面包","price":"8元","img":"https://github.com/tx19980520/Where-to-eat/blob/master/canteen_pic/%E7%89%9B%E5%A5%B6%E5%93%88%E6%96%AF%E9%9D%A2%E5%8C%85.jpg?raw=true"},
-    {"name":"黄金乳酪面包","price":"7.5元","img":"https://github.com/tx19980520/Where-to-eat/blob/master/canteen_pic/%E9%BB%84%E9%87%91%E4%B9%B3%E9%85%AA%E9%9D%A2%E5%8C%85.jpg?raw=true"},
-    {"name":"轻乳酪蛋糕","price":"9元","img":"https://github.com/tx19980520/Where-to-eat/blob/master/canteen_pic/%E8%BD%BB%E4%B9%B3%E9%85%AA%E8%9B%8B%E7%B3%95.jpg?raw=true"},
-    {"name":"核桃切片饼干","price":"13.8元","img":"https://github.com/tx19980520/Where-to-eat/blob/master/canteen_pic/%E6%A0%B8%E6%A1%83%E5%88%87%E7%89%87%E9%A5%BC%E5%B9%B2.jpg?raw=true"},
-    {"name":"蓝莓曲奇饼干","price":"10.8元","img":"https://github.com/tx19980520/Where-to-eat/blob/master/canteen_pic/%E8%93%9D%E8%8E%93%E6%9B%B2%E5%A5%87%E9%A5%BC%E5%B9%B2.jpg?raw=true"},
-    {"name":"蔓越莓切片饼干","price":"13.8元","img":"https://github.com/tx19980520/Where-to-eat/blob/master/canteen_pic/%E8%94%93%E8%B6%8A%E8%8E%93%E5%88%87%E7%89%87%E9%A5%BC%E5%B9%B2.jpg?raw=true"}
-];
+const listData = Data.cateen_4[0].甜魔烘焙;
 
 export default class ListBox extends Component {
 
