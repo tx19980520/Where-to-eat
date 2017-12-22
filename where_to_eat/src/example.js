@@ -1,6 +1,8 @@
 import React, { Component }from 'react';
-import constantData from './canteen_4.json'
-import "./example.css"
+import constantData from './canteen_4.json';
+import {BrowserRouter as Router,Switch,Route,Link} from 'react-router-dom'
+//import Detail from './Detail.js'
+import "./example.css";
 
 export class Star extends React.Component {//路过点击和走开都要传值
   constructor(props) {
@@ -34,7 +36,7 @@ export class Star extends React.Component {//路过点击和走开都要传值
   render(){
     let list = <div></div>
     const show = this.props.show;
-    if(show >= this.state.value || this.state.value == 1){
+    if(show >= this.state.value || this.state.value === 1){
       list=<li class="star light" onClick={this.handleStarClick} onMouseOver={this.handleGoStar} onMouseOut={this.handleLeaveStar}><a href="javascript:;">  </a></li>
     }
     else{
@@ -228,7 +230,7 @@ var Data = eval(constantData);
 
 const listData = Data.cateen_4[0].甜魔烘焙;
 
-export default class ListBox extends Component {
+export  class ListBox extends Component {
 
     constructor(props){
         super(props);
@@ -246,7 +248,6 @@ export default class ListBox extends Component {
     }
 
     componentWillMount(){
-        //设置总页数
         this.setState({
             totalPage:Math.ceil( this.state.totalData.length/this.state.pageSize),
         })
@@ -260,8 +261,6 @@ export default class ListBox extends Component {
             indexList:this.state.totalData.slice(num,num+this.state.pageSize)
         })
     }
-
-
     pageNext (num) {
         this.setPage(num)
     }
@@ -269,24 +268,20 @@ export default class ListBox extends Component {
 
 
     render() {
-
-        return (
-            <div>
-                <div>
+        return (<div>
                     <ul>
                         {this.state.indexList.map(function (cont) {
-                            return <List {...cont} />
+                            return (
+                              <div>
+                              <List {...cont} />
+                          </div>)
                         })}
                     </ul>
-
                     <PageButton { ...this.state } pageNext={this.pageNext} />
-
-                </div>
-            </div>
+                  </div>
         );
     }
 }
-
 
 class List extends Component {
     constructor(props) {
@@ -295,13 +290,15 @@ class List extends Component {
 
     render() {
         const { idd, name, price, img } = this.props
-
+        let path = '/detail/'+this.props.name;
         return (
             <li id={idd}>
                 <br></br>
                     <div>
                         <div class="imgSize">
-                            <img src={ img }/>
+                        <Link to={path}>
+                              <img src={ img }/>
+                        </Link>
                         </div>
                         <p>Name:{ name }</p>
                         <p>Price:{ price }</p>
@@ -324,8 +321,6 @@ class PageButton extends Component {
             pagenum:this.props.current
         }
     }
-
-    //下一页
     setNext(){
         if(this.state.pagenum < this.props.totalPage){
             this.setState({
@@ -361,3 +356,53 @@ class PageButton extends Component {
         );
     }
 }
+class ModalRouter extends React.Component {
+  previousLocation = this.props.location
+  //####################这一块不要动####################
+  componentWillUpdate(nextProps) {
+    const { location } = this.props
+    // set previousLocation if props.location is not modal
+    if (
+      nextProps.history.action !== 'POP' &&
+      (!location.state || !location.state.modal)
+    ) {
+      this.previousLocation = this.props.location
+    }
+  }
+
+  render() {
+    const { location } = this.props
+    const isModal = !!(
+      location.state &&
+      location.state.modal &&
+      this.previousLocation !== location // not initial render
+    )
+    return (
+      <div>
+        <Switch location={isModal ? this.previousLocation : location}>
+          <Route exact path='/' component={ListBox}/>
+          <Route path='/detail/:data' component={Detail}/>
+        </Switch>
+      </div>
+    )
+  }
+}
+const Detail =({match})=>{
+  var price = ""
+  var img = ""
+  listData.map(function(cont){
+    if(cont.name == match.params.data)
+    {
+      price = cont.price;
+      img = cont.img;
+    }
+  })
+  return(<div><h5>{match.params.data}</h5>
+  <img src={img} /><p>{price}</p><ReviewModel /><Stars /></div>)
+}
+const Gallery = () => (
+  <Router>
+    <Route component={ModalRouter} />
+  </Router>
+)
+export default Gallery
