@@ -15,23 +15,23 @@ export class Star extends React.Component {//路过点击和走开都要传值
   handleStarClick() {//鼠标点击,同时会调用onmouseout,改变tempnum值点亮星星
     if (this.props.onSubmit) {
         const {value} = this.state
-        this.props.onSubmit({value});
+        let hold = 1;
+        this.props.onSubmit({value,hold});
         alert("感谢您的评分");
         }
   }
 
   handleGoStar(){ //鼠标经过点亮星星。
        if(this.props.onSubmit){
-         const {value} = this.state
-         this.props.onSubmit({value});
+         const {value,hold} = this.state
+         this.props.onSubmit({value,hold});
        } //传入的值为正，就是finalnum
      }
      handleLeaveStar() { //鼠标离开时星星变暗
        if(this.props.onSubmit){
-         this.setState({})
-         const {hold} = this.state
+         const {value,hold} = this.state
          this.props.onSubmit(hold);
-       }  //传入值为0，finalnum为tempnum,初始为0
+       }
      }
   render(){
     let list = <div></div>
@@ -48,23 +48,32 @@ export class Star extends React.Component {//路过点击和走开都要传值
 export class Stars extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {num:0,tempnum:0,finalnum:0};
+    this.state = {num:0.0,tempnum:0,statistic:0.0,clicknum:0};
     this.StarsShow = this.StarsShow.bind(this);
   }
 
   StarsShow(comment) {
-    if(!comment.value)
+    console.log(comment)
+    if(comment.hold == 0)
     {
-      this.setState({num:comment.hold});
-    }
-    else{
       this.setState({num:comment.value});
+    }
+    else if(comment.hold == 1){
+      this.setState({num:comment.value});//这个地方先改变纯粹是为了样式
+      let newclick = this.state.clicknum+1;
+      let newnum = (this.state.statistic*this.state.clicknum+comment.value)*1.0/newclick;
+      console.log(newnum)
+      this.setState({statistic:newnum});
+      this.setState({clicknum:newclick});
+      this.setState({num:newnum});
+      console.log(this.state.num)
     }
   }
 
   render(){
         return (
             <div>
+            <p>评分：{this.state.statistic}</p>
             <Star num={1} show={this.state.num} onSubmit={this.StarsShow} />
             <Star num={2} show={this.state.num} onSubmit={this.StarsShow} />
             <Star num={3} show={this.state.num} onSubmit={this.StarsShow} />
@@ -153,7 +162,6 @@ export class ReviewModel extends React.Component {
       comments: this.state.comments
     });
     this.setState({isView: false});
-    alert(this.state.comments[0].nowComment)
   }
   handleViewClick() {
     this.setState({isView: true});
@@ -228,7 +236,7 @@ function NotReviewButton(props) {
 
 var Data = eval(constantData);
 
-const listData = Data.cateen_4[0].甜魔烘焙;
+const listData = Data.cateen_4[0].Timo;
 
 export  class ListBox extends Component {
 
