@@ -49,10 +49,10 @@ export class Stars extends React.Component {
   constructor(props) {
     super(props);
     this.state = {num:0,tempnum:0,finalnum:0};
-    this.fnShow = this.fnShow.bind(this);
+    this.StarsShow = this.StarsShow.bind(this);
   }
 
-  fnShow(comment) {
+  StarsShow(comment) {
     if(!comment.value)
     {
       this.setState({num:comment.hold});
@@ -65,11 +65,11 @@ export class Stars extends React.Component {
   render(){
         return (
             <div>
-            <Star num={1} show={this.state.num} onSubmit={this.fnShow} />
-            <Star num={2} show={this.state.num} onSubmit={this.fnShow} />
-            <Star num={3} show={this.state.num} onSubmit={this.fnShow} />
-            <Star num={4} show={this.state.num} onSubmit={this.fnShow} />
-            <Star num={5} show={this.state.num} onSubmit={this.fnShow} />
+            <Star num={1} show={this.state.num} onSubmit={this.StarsShow} />
+            <Star num={2} show={this.state.num} onSubmit={this.StarsShow} />
+            <Star num={3} show={this.state.num} onSubmit={this.StarsShow} />
+            <Star num={4} show={this.state.num} onSubmit={this.StarsShow} />
+            <Star num={5} show={this.state.num} onSubmit={this.StarsShow} />
             </div>
         );
   }
@@ -264,9 +264,6 @@ export  class ListBox extends Component {
     pageNext (num) {
         this.setPage(num)
     }
-
-
-
     render() {
         return (<div>
                     <ul>
@@ -286,13 +283,21 @@ export  class ListBox extends Component {
 class List extends Component {
     constructor(props) {
         super(props);
+        this.Thick = this.Thick.bind(this);
+        this.Thin = this.Thin.bind(this);
+        this.state = {Ison:"noton"}
     }
-
+Thick(){
+  this.setState({Ison:"ison"});
+}
+Thin(){
+  this.setState({Ison:"noton"});
+}
     render() {
         const { idd, name, price, img } = this.props
         let path = '/detail/'+this.props.name;
         return (
-            <li id={idd}>
+            <li id={idd} className={this.state.Ison} onMouseOver={this.Thick} onMouseOut={this.Thin}>
                 <br></br>
                     <div>
                         <div class="imgSize">
@@ -302,8 +307,6 @@ class List extends Component {
                         </div>
                         <p>Name:{ name }</p>
                         <p>Price:{ price }</p>
-                        <ReviewModel />
-                        <Stars />
                     </div>
             </li>
         );
@@ -396,9 +399,14 @@ const Detail =({match})=>{
       price = cont.price;
       img = cont.img;
     }
-  })
-  return(<div><h5>{match.params.data}</h5>
-  <img src={img} /><p>{price}</p><ReviewModel /><Stars /></div>)
+  })//We enter a new page here, contributor can add something here. --tx
+  return(<div>
+      <h5>{match.params.data}</h5>
+      <img src={img} />
+      <p>price:{price}</p>
+      <ReviewModel />
+      <Stars />
+      </div>)
 }
 const Gallery = () => (
   <Router>
