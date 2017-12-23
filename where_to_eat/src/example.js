@@ -303,7 +303,7 @@ Thin(){
 }
     render() {
         const { idd, name, price, img } = this.props
-        let path = '/detail/'+this.props.name;
+        let path = '/canteen/detail/'+this.props.name;
         return (
             <li id={idd} className={this.state.Ison} onMouseOver={this.Thick} onMouseOut={this.Thin}>
                 <br></br>
@@ -367,7 +367,7 @@ class PageButton extends Component {
         );
     }
 }
-class ModalRouter extends React.Component {
+export class ModalRouter extends React.Component {
   previousLocation = this.props.location
   //####################这一块不要动####################
   componentWillUpdate(nextProps) {
@@ -391,8 +391,8 @@ class ModalRouter extends React.Component {
     return (
       <div>
         <Switch location={isModal ? this.previousLocation : location}>
-          <Route exact path='/' component={ListBox}/>
-          <Route path='/detail/:data' component={Detail}/>
+          <Route exact path='/canteen' component={ListBox}/>
+          <Route path='/canteen/detail/:data' component={Detail}/>
         </Switch>
       </div>
     )
@@ -417,8 +417,8 @@ const Detail =({match})=>{
       </div>)
 }
 const Gallery = () => (
-  <Router>
+  <div>
     <Route component={ModalRouter} />
-  </Router>
+  </div>
 )
 export default Gallery
