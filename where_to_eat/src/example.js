@@ -358,11 +358,20 @@ class PageButton extends Component {
 
     render() {
         return (
-            <div className="change_page">
-                <button onClick={ this.setUp } >上一页</button>
-                <span>{ this.state.pagenum }页/ { this.props.totalPage }页</span>
-                <button onClick={ this.setNext }>下一页</button>
-            </div>
+            <div>
+            <ul className='pager'>
+            <li className="previous">
+                <button onClick={ this.setUp } ><span className="glyphicon glyphicon-backward" style={{color:'rgb(251,206,45)'}}>上一页</span></button>
+              </li>
+              <li><span>{ this.state.pagenum }页/ { this.props.totalPage }页</span></li>
+                <li className='next'>
+                <button onClick={ this.setNext }><span className="glyphicon glyphicon-forward" style={{color:"rgb(251,206,45)" }}> 下一页</span></button>
+              </li>
+            </ul>
+			<footer>
+            <p className="text-center">Copyright&nbsp;&#169;&nbsp;2017&nbsp;<a href="www.cqdulux.cn">www.cqdulux.cn</a>&nbsp;All Rights Reserved! Powered by <a href="https://doc.react-china.org/">React-App</a> and <a href="http://www.bootcss.com/">Bootstrap</a> </p>
+			</footer>
+			</div>
         );
     }
 }
@@ -430,7 +439,7 @@ class Others extends React.Component {
     console.log(final)
     if(final+4>this.props.totalnum)
     {
-      this.state={randomnum:final,indexList:(listData.slice(final,final+4)+listData.slice(0,final+4-this.props.totalnum))}
+      this.state={randomnum:final,indexList:listData.slice(final-4,final)}
     }
     else{
       this.state={randomnum:final,indexList:listData.slice(final,final+4)}

@@ -51,7 +51,10 @@ class Canteens extends React.Component {
               </div>)
               })}
             </ul>
-          </div>);
+			<footer>
+            <p className="text-center">Copyright&nbsp;&#169;&nbsp;2017&nbsp;<a href="www.cqdulux.cn">www.cqdulux.cn</a>&nbsp;All Rights Reserved! Powered by <a href="https://doc.react-china.org/">React-App</a> and <a href="http://www.bootcss.com/">Bootstrap</a> </p>
+			</footer>
+		  </div>);
 }
 }
 class CanteenRouter extends React.Component {
