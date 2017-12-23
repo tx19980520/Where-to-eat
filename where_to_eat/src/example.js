@@ -1,14 +1,16 @@
 import React, { Component }from 'react';
 import constantData from './canteen_4.json';
-import {BrowserRouter as Router,Switch,Route,Link} from 'react-router-dom'
-//import Detail from './Detail.js'
+import {Switch,Route,Link} from 'react-router-dom'
 import "./example.css";
 
+var Data = eval(constantData);
+const Timonum = Data.canteen_4[0].TimoNum;
+const listData = Data.canteen_4[0].Timo;
 export class Star extends React.Component {//路过点击和走开都要传值
   constructor(props) {
     super(props);
     this.state = {value:this.props.num,hold:0};
-    this.handleStarClick= this.handleStarClick.bind(this);
+    this.handleStarClick = this.handleStarClick.bind(this);
     this.handleGoStar = this.handleGoStar.bind(this);
     this.handleLeaveStar = this.handleLeaveStar.bind(this);
   }
@@ -29,7 +31,7 @@ export class Star extends React.Component {//路过点击和走开都要传值
      }
      handleLeaveStar() { //鼠标离开时星星变暗
        if(this.props.onSubmit){
-         const {value,hold} = this.state
+         const {hold} = this.state
          this.props.onSubmit(hold);
        }
      }
@@ -177,7 +179,7 @@ export class ReviewModel extends React.Component {
     let button = null;
     let review = <div></div>;
     if (isView) {
-      button = <NotReviewButton onClick={this.handleNotviewClick} />;
+      button = <NotReviewButton  onClick={this.handleNotviewClick} />;
       review = <CommentInput isView={this.state.isView} onSubmit={this.handleSubmitComment}/>
       previous = <CommentList comments={this.state.comments} />;
     } else {
@@ -195,7 +197,7 @@ export class ReviewModel extends React.Component {
 }
 
 function UserView(props) {
-  return (<div><font>您的评论</font><textarea onChange={props.onChange}></textarea></div>);
+  return (<div><font>您的评论</font><textarea className="form-control" style={{ width:300}} rows="3" onChange={props.onChange}></textarea></div>);
 }
 
 function UserNotView(props) {
@@ -211,7 +213,7 @@ function Views(props) {
 }
 function UserName(props) {
   return(<div><font>用户名</font>
-    <input type="text" value={props.username} onChange={props.onChange}/> </div>);
+    <input type="text" className="form-control"  style={{ width:200}}  value={props.username} onChange={props.onChange}/> </div>);
 }
 function SubmitButton(props) {
     return (<button onClick={props.onClick}>
@@ -220,7 +222,7 @@ function SubmitButton(props) {
 }
 function ReViewButton(props) {
   return (
-    <button onClick={props.onClick}>
+    <button type="button" className="btn btn-warning" onClick={props.onClick}>
       评论
     </button>
   );
@@ -228,15 +230,12 @@ function ReViewButton(props) {
 
 function NotReviewButton(props) {
   return (
-    <button onClick={props.onClick}>
+    <button type="button" className="btn btn-warning" onClick={props.onClick}>
       取消评论
     </button>
   );
 }
 
-var Data = eval(constantData);
-
-const listData = Data.cateen_4[0].Timo;
 
 export  class ListBox extends Component {
 
@@ -392,7 +391,9 @@ export class ModalRouter extends React.Component {
       <div>
         <Switch location={isModal ? this.previousLocation : location}>
           <Route exact path='/canteen' component={ListBox}/>
-          <Route path='/canteen/detail/:data' component={Detail}/>
+          <Route path='/canteen/detail/:data' component={Detail} >
+            <Route path='/canteen/detail/:data' component={Detail} />
+          </Route>
         </Switch>
       </div>
     )
@@ -409,12 +410,50 @@ const Detail =({match})=>{
     }
   })//We enter a new page here, contributor can add something here. --tx
   return(<div>
+    <ScrollToTop>
       <h5>{match.params.data}</h5>
       <img src={img} />
       <p>price:{price}</p>
       <ReviewModel />
       <Stars />
+      <br />
+      <Others totalnum={Timonum} />
+    </ScrollToTop>
       </div>)
+}
+
+class Others extends React.Component {
+  constructor(props) {
+    super(props);
+    var Range = this.props.totalnum;
+    var final = Math.floor(Math.random()*Range)
+    console.log(final)
+    if(final+4>this.props.totalnum)
+    {
+      this.state={randomnum:final,indexList:(listData.slice(final,final+4)+listData.slice(0,final+4-this.props.totalnum))}
+    }
+    else{
+      this.state={randomnum:final,indexList:listData.slice(final,final+4)}
+    }
+  }
+  render(){
+    let others = this.state.indexList.map(function (cont){
+      return(<div><Link to={"/canteen/detail/"+cont.name}><img src={cont.img} /></Link><p>name:{cont.name}  price:{cont.price}</p>
+      </div>);
+    })
+    return(<div><br /><p>其他推荐</p>{others}</div>);
+  }
+}
+class ScrollToTop extends Component {
+  componentDidUpdate(prevProps) {
+    if (this.props.location !== prevProps.location) {
+      window.scrollTo(0, 0)
+    }
+  }
+
+  render() {
+    return this.props.children
+  }
 }
 const Gallery = () => (
   <div>

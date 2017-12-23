@@ -8,9 +8,7 @@ import {
   Route,
   Link
 } from 'react-router-dom'
-import App from './App.js';
 import Gallery from './example.js'
-import Detail from './example.js'
 var Data = eval(CanteenData);
 const canteenList = Data.canteens//我们在这个位置导入我们的餐厅的数据
 export class TotalBars extends React.Component {
