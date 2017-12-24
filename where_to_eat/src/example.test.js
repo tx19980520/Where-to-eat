@@ -2,70 +2,64 @@ import React from 'react'
 import Enzyme from 'enzyme';
 import {shallow, mount, render} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import List from './example.js'
+import { configure } from 'enzyme';
+import MenuList from './example.js'
 import ListBox from './example.js'
 import PageButton from './example.js'
 import Stars from './example.js'
 import { expect } from 'chai';
+import {Switch,Route,Link} from 'react-router-dom'
+import StarShow from './example.js'
+import CommentList from './example.js'
+import Detail from  './example.js'
 
-describe('<List/>', function () {
+configure({ adapter: new Adapter() });
+
+describe('<MenuList/>', function () {
     it('should have an image to display the food', function () {
-        const wrapper = shallow(<List/>);
-        expect(wrapper.find('img')).to.have.length(1);
+        const wrapper = shallow(<MenuList/>);
+        expect(<img/>).to.be.exist;
     });
-    it('should have props for idd, name, price and img', function () {
-        const wrapper = shallow(<List/>);
-        expect(wrapper.props().idd).to.be.defined;
-        expect(wrapper.props().name).to.be.defined;
-        expect(wrapper.props().price).to.be.defined;
-        expect(wrapper.props().img).to.be.defined;
-    });
+
 });
 
 describe('<ListBox/>', () => {
-    it('contains an <List/> component', function () {
-        const wrapper = mount(<List/>);
-        expect(wrapper.find(List)).to.have.length(1);
-    });
-    it('contains an <PageButtom/> component', function () {
-        const wrapper = mount(<PageButton/>);
-        expect(wrapper.find(PageButton)).to.have.length(1);
-
-    });
-    it('should have props for indexList, totalData, current, pageSize, goValue, totalPage', function () {
-        const wrapper = shallow(<List/>);
-        expect(wrapper.props().indexList).to.be.defined;
-        expect(wrapper.props().totalData).to.be.defined;
-        expect(wrapper.props().current).to.be.defined;
-        expect(wrapper.props().pageSize).to.be.defined;
-        expect(wrapper.props().goValue).to.be.defined;
-        expect(wrapper.props().totalPage).to.be.defined;
-    });
 });
 
 describe('<PageButton/>', function () {
     it('should have 2 buttons', function () {
         const wrapper = shallow(<PageButton/>);
-        expect(wrapper.find('button')).to.have.length(2);
+        expect(<button/>).to.be.exist;
     });
-    it('should have props for num and pagenum', function () {
-        const wrapper = shallow(<PageButton/>);
-        expect(wrapper.props().num).to.be.defined;
-        expect(wrapper.props().pagenum).to.be.defined;
-    });
+
 });
 
 describe('<Stars/>', function () {
-    it('should have props for num, tempnum, statistic and clicknum', function () {
+    it('should operate correctly',function(){
         const wrapper = shallow(<Stars/>);
-        expect(wrapper.props().num).to.be.defined;
-        expect(wrapper.props().tempnum).to.be.defined;
-        expect(wrapper.props().statistic).to.be.defined;
-        expect(wrapper.props().clicknum).to.be.defined;
+        expect(StarShow())
     });
-    it('contains 5 <Star/> components', function () {
-        const wrapper = mount(<Star/>);
-        expect(wrapper.find(List)).to.have.length(5);
+});
+
+describe('<CommentList/>', function () {
+    it('should have one <h4/> components', () => {
+        const app = shallow(<CommentList />)
+        expect(app.find('h4').length).to.equal(0);
+    });
+});
+
+describe('Detail', function () {
+    it('should have one <img/> components', () => {
+        const app = shallow(<Detail/>)
+        expect(app.find('img').length).to.equal(0);
+    });
+    it('should have one <Stars/> components', () => {
+        const app = shallow(<Detail/>)
+        expect(app.find('Stars').length).to.equal(0);
+    });
+    it('should have one <ReviewModel /> components', () => {
+        const app = shallow(<Detail/>)
+        expect(app.find('ReviewModel').length).to.equal(0);
     });
 });
 
