@@ -55,20 +55,17 @@ export class Stars extends React.Component {
   }
 
   StarsShow(comment) {
-    console.log(comment)
-    if(comment.hold == 0)
+    if(comment.hold === 0)
     {
       this.setState({num:comment.value});
     }
-    else if(comment.hold == 1){
+    else if(comment.hold === 1){
       this.setState({num:comment.value});//这个地方先改变纯粹是为了样式
       let newclick = this.state.clicknum+1;
       let newnum = (this.state.statistic*this.state.clicknum+comment.value)*1.0/newclick;
-      console.log(newnum)
       this.setState({statistic:newnum});
       this.setState({clicknum:newclick});
       this.setState({num:newnum});
-      console.log(this.state.num)
     }
   }
 
@@ -121,29 +118,28 @@ export class CommentInput extends React.Component {
     );
   }
 }
-export class Commentline extends React.Component {
-  static defaultProps = {
-    comment:[]
-  }
-  render(){
-    return(
-      <div>
-      <span>{this.props.comment.username} </span>
-        <p>{this.props.comment.nowComment}</p>
-      </div>
-    );
-  }
-}
+//本来我们这个地方是再使用了一次封装来作展示
 export class CommentList extends React.Component {
   static defaultProps = {
     comments: []
   }
   render() {
   return (
-     <div>
+     <div className="panel panel-warning">
+      <div className="panel-heading">
+        <h4 className="panel-title">评论区</h4>
+      </div>
+      <div className="panel-body">
+      <table class="table">
+        <th>用户</th><th>评论</th>
        {this.props.comments.map((comment, i) =>
-         <Commentline comment={comment} key={i} />
+         <tr>
+         <td>{comment.username} </td>
+           <td>{comment.nowComment}</td>
+         </tr>
        )}
+       </table>
+       </div>
      </div>
    );
  }
@@ -189,6 +185,8 @@ export class ReviewModel extends React.Component {
     return (
       <div>
         {button}
+        <br />
+        <br />
         {review}
         {previous}
       </div>
@@ -230,7 +228,7 @@ function ReViewButton(props) {
 
 function NotReviewButton(props) {
   return (
-    <button type="button" className="btn btn-warning" onClick={props.onClick}>
+    <button type="button" className="btn btn-primary" onClick={props.onClick}>
       取消评论
     </button>
   );
@@ -238,7 +236,6 @@ function NotReviewButton(props) {
 
 
 export  class ListBox extends Component {
-
     constructor(props){
         super(props);
         this.pageNext=this.pageNext.bind(this);
@@ -307,11 +304,9 @@ Thin(){
             <li id={idd} className={this.state.Ison} onMouseOver={this.Thick} onMouseOut={this.Thin}>
                 <br></br>
                     <div>
-                        <div class="imgSize">
                         <Link to={path}>
-                              <img src={ img }/>
+                              <img className="imgSize" src={ img }/>
                         </Link>
-                        </div>
                         <p>Name:{ name }</p>
                         <p>Price:{ price }</p>
                     </div>
@@ -337,7 +332,6 @@ class PageButton extends Component {
                 num:this.state.num + this.props.pageSize,
                 pagenum:this.state.pagenum + 1
             },function () {
-                console.log(this.state)
                 this.props.pageNext(this.state.num)
             })
         }
@@ -350,7 +344,6 @@ class PageButton extends Component {
                 num:this.state.num - this.props.pageSize,
                 pagenum:this.state.pagenum - 1
             },function () {
-                console.log(this.state)
                 this.props.pageNext(this.state.num)
             })
         }
@@ -368,9 +361,7 @@ class PageButton extends Component {
                 <button onClick={ this.setNext }><span className="glyphicon glyphicon-forward" style={{color:"rgb(251,206,45)" }}> 下一页</span></button>
               </li>
             </ul>
-			<footer>
-            <p className="text-center">Copyright&nbsp;&#169;&nbsp;2017&nbsp;<a href="www.cqdulux.cn">www.cqdulux.cn</a>&nbsp;All Rights Reserved! Powered by <a href="https://doc.react-china.org/">React-App</a> and <a href="http://www.bootcss.com/">Bootstrap</a> </p>
-			</footer>
+            <hr style={{height:"1px",border:"none",color:"#fbce2d"}} />
 			</div>
         );
     }
@@ -412,7 +403,7 @@ const Detail =({match})=>{
   var price = ""
   var img = ""
   listData.map(function(cont){
-    if(cont.name == match.params.data)
+    if(cont.name === match.params.data)
     {
       price = cont.price;
       img = cont.img;
@@ -420,7 +411,7 @@ const Detail =({match})=>{
   })//We enter a new page here, contributor can add something here. --tx
   return(<div>
     <ScrollToTop>
-      <h5>{match.params.data}</h5>
+      <h4><font style={{fontSize: 20}}>{match.params.data}</font></h4>
       <img src={img} />
       <p>price:{price}</p>
       <ReviewModel />
@@ -428,7 +419,7 @@ const Detail =({match})=>{
       <br />
       <Others totalnum={Timonum} />
     </ScrollToTop>
-      </div>)
+      </div>);
 }
 
 class Others extends React.Component {
@@ -436,7 +427,6 @@ class Others extends React.Component {
     super(props);
     var Range = this.props.totalnum;
     var final = Math.floor(Math.random()*Range)
-    console.log(final)
     if(final+4>this.props.totalnum)
     {
       this.state={randomnum:final,indexList:listData.slice(final-4,final)}
@@ -465,8 +455,10 @@ class ScrollToTop extends Component {
   }
 }
 const Gallery = () => (
-  <div>
+  <div class="panel panel-default">
+  <div class="panel-body">
     <Route component={ModalRouter} />
+  </div>
   </div>
 )
 export default Gallery

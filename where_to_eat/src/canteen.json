@@ -1,12 +1,12 @@
 {
     "canteens":
     [
-        {"name":"canteen_1","img":"https://github.com/tx19980520/Where-to-eat/blob/master/canteen_pic/canteen1.jpg?raw=true"},
-        {"name":"canteen_2","img":"https://github.com/tx19980520/Where-to-eat/blob/master/canteen_pic/canteen2.jpg?raw=true"},
-        {"name":"canteen_3","img":"https://github.com/tx19980520/Where-to-eat/blob/master/canteen_pic/canteen3.jpg?raw=true"},
-        {"name":"canteen_4","img":"https://github.com/tx19980520/Where-to-eat/blob/master/canteen_pic/canteen4.jpg?raw=true"},
-        {"name":"canteen_5","img":"https://github.com/tx19980520/Where-to-eat/blob/master/canteen_pic/canteen5.jpg?raw=true"},
-        {"name":"canteen_6","img":"https://github.com/tx19980520/Where-to-eat/blob/master/canteen_pic/canteen6.jpg?raw=true"},
-        {"name":"canteen_7","img":"https://github.com/tx19980520/Where-to-eat/blob/master/canteen_pic/canteen7.jpg?raw=true"}
+        {"name":"第一餐饮大楼","img":"https://github.com/tx19980520/Where-to-eat/blob/master/canteen_pic/canteen1.jpg?raw=true"},
+        {"name":"第二餐饮大楼","img":"https://github.com/tx19980520/Where-to-eat/blob/master/canteen_pic/canteen2.jpg?raw=true"},
+        {"name":"第三餐饮大楼","img":"https://github.com/tx19980520/Where-to-eat/blob/master/canteen_pic/canteen3.jpg?raw=true"},
+        {"name":"第四餐饮大楼","img":"https://github.com/tx19980520/Where-to-eat/blob/master/canteen_pic/canteen4.jpg?raw=true"},
+        {"name":"第五餐饮大楼","img":"https://github.com/tx19980520/Where-to-eat/blob/master/canteen_pic/canteen5.jpg?raw=true"},
+        {"name":"第六餐饮大楼","img":"https://github.com/tx19980520/Where-to-eat/blob/master/canteen_pic/canteen6.jpg?raw=true"},
+        {"name":"哈乐餐厅","img":"https://github.com/tx19980520/Where-to-eat/blob/master/canteen_pic/canteen7.jpg?raw=true"}
     ]
 }

@@ -29,8 +29,8 @@ ul li a {
 }
 
 .imgSize {
-    height: auto;
-    width: auto;
+    height: 300px;
+    width: 400px;
 }
 li.ison {
   border:solid;

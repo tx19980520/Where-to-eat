@@ -1,6 +1,4 @@
-import React, {
-  Component
-} from 'react';
+import React from 'react';
 import CanteenData from './canteen.json';
 import {
   BrowserRouter as Router,
@@ -16,8 +14,8 @@ export class TotalBars extends React.Component {
     super(props);
   }
   render() {
-    return(<div><img src="https://github.com/tx19980520/Where-to-eat/blob/master/pictures/where_to_eat.png?raw=true" /><ul className="nav nav-tabs nav-justified">
-  <li className="active"><a href="javascript:;">菜品大全</a></li>
+    return(<div><img className="img_QNC" src="https://github.com/tx19980520/Where-to-eat/blob/master/pictures/where_to_eat.png?raw=true" /><ul className="nav nav-tabs nav-justified" >
+  <li className="active"><Link to={'/'}>菜品大全</Link></li>
   <li className='disable'><a href="javascript:alert('敬请期待！');">食堂实况</a></li>
   <li className='disable'><a href="javascript:alert('敬请期待！');">个性推荐</a></li>
 </ul></div>);
@@ -32,15 +30,14 @@ class CanteenImage extends React.Component {
     const { name, img } = this.props;
   return (
     <div>
-    <Link to={"/canteen"}><img src={img} /></Link>
-    <p>{name}</p>
+    <Link to={"/canteen"}><img src={img} width={400} height={300} className="img_CT"/></Link>
+    <p className="text-left"><font style={{fontSize: 30}}>{name}</font></p>
     </div>
   );
 }
 }
 class Canteens extends React.Component {
   render(){
-    const { name, img } = this.props;
   return (
     <div>
     <ul>
@@ -51,14 +48,17 @@ class Canteens extends React.Component {
               </div>)
               })}
             </ul>
-			<footer>
-            <p className="text-center">Copyright&nbsp;&#169;&nbsp;2017&nbsp;<a href="www.cqdulux.cn">www.cqdulux.cn</a>&nbsp;All Rights Reserved! Powered by <a href="https://doc.react-china.org/">React-App</a> and <a href="http://www.bootcss.com/">Bootstrap</a> </p>
-			</footer>
 		  </div>);
 }
 }
 class CanteenRouter extends React.Component {
   previousLocation = this.props.location
+  componentWillReceiveProps(nextProps){
+        //当路由切换时
+        if(this.props.location !== nextProps.location){
+            window.scrollTo(0,0)
+        }
+    }
   //####################这一块不要动####################
   componentWillUpdate(nextProps) {
     const {
@@ -81,6 +81,7 @@ class CanteenRouter extends React.Component {
       this.previousLocation !== location // not initial render
     ) //###########到这里下面的东西可以开始改了########################
     return ( <div >
+      <TotalBars />
       <Switch location = {isModal ? this.previousLocation : location} >
       <Route exact path='/' component={Canteens}/>
       <Route path='/canteen' component={Gallery}/>
@@ -91,7 +92,6 @@ class CanteenRouter extends React.Component {
 }
 const CanteenGallery=()=>(
   <div>
-  <TotalBars />
   <Router>
     <Route component={CanteenRouter} />
   </Router>
