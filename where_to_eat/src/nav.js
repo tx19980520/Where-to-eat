@@ -21,6 +21,15 @@ export class TotalBars extends React.Component {
 </ul></div>);
   }
 }
+var style_list={
+    color:'black',
+    fontSize:30,
+    fontWeight:"normal"
+}
+var img_style={
+  width:400,
+    height:300,
+}
 class CanteenImage extends React.Component {
   constructor(props) {
     super(props);
@@ -30,8 +39,8 @@ class CanteenImage extends React.Component {
     const { name, img } = this.props;
   return (
     <div>
-    <Link to={"/canteen"}><img src={img} width={400} height={300} className="img_CT"/></Link>
-    <p className="text-left"><font style={{fontSize: 30}}>{name}</font></p>
+    <Link to={"/canteen"}><img src={img} style={img_style} className="img_CT thumbnail"/></Link>
+    <p className=" text-left " style={style_list}>{name}</p>
     </div>
   );
 }
