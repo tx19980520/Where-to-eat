@@ -1,7 +1,7 @@
 import React, { Component }from 'react';
 import constantData from './canteen_4.json';
 import {Switch,Route,Link} from 'react-router-dom'
-import "./example.css";
+import "./examples.css";
 
 var Data = eval(constantData);
 const Timonum = Data.canteen_4[0].TimoNum;
@@ -125,13 +125,13 @@ export class CommentList extends React.Component {
   }
   render() {
   return (
-     <div className="panel panel-warning">
+     <div className="panel panel-warning col-md-7">
       <div className="panel-heading">
         <h4 className="panel-title">评论区</h4>
       </div>
       <div className="panel-body">
-      <table class="table">
-        <th>用户</th><th>评论</th>
+      <table className="table">
+        <th className="col-md-2">用户</th><th className="col-md-5" style={{width:300}} >评论</th>
        {this.props.comments.map((comment, i) =>
          <tr>
          <td>{comment.username} </td>
@@ -214,7 +214,7 @@ function UserName(props) {
     <input type="text" className="form-control"  style={{ width:200}}  value={props.username} onChange={props.onChange}/> </div>);
 }
 function SubmitButton(props) {
-    return (<button onClick={props.onClick}>
+    return (<button className="btn btn-primary" onClick={props.onClick}>
     提交
     </button>);
 }
@@ -233,7 +233,23 @@ function NotReviewButton(props) {
     </button>
   );
 }
-
+export class ListLine extends React.Component{
+  constructor(props) {
+    super(props);
+    this.state = {isView: false ,listhold:this.props.listdatas};
+  }
+  render(){
+    return(
+    <div className="row">
+    {
+      this.state.listhold.map(function(cont){
+        return(<List {...cont} />);
+      })
+    }
+    </div>
+    );
+  }
+}
 
 export  class ListBox extends Component {
     constructor(props){
@@ -244,7 +260,7 @@ export  class ListBox extends Component {
             indexList:[],//当前渲染的页面数据
             totalData:listData,
             current: 1, //当前页码
-            pageSize:4, //每页显示的条数
+            pageSize:8, //每页显示的条数
             goValue:0,  //要去的条数index
             totalPage:0,//总页数
         };
@@ -266,20 +282,20 @@ export  class ListBox extends Component {
         })
     }
     pageNext (num) {
-        this.setPage(num)
+        this.setPage(num);
     }
+
     render() {
-        return (<div>
-                    <ul>
-                        {this.state.indexList.map(function (cont) {
+      return (<div><div>
+        {this.state.indexList.map(function (cont) {
                             return (
                               <div>
                               <List {...cont} />
                           </div>)
                         })}
-                    </ul>
-                    <PageButton { ...this.state } pageNext={this.pageNext} />
-                  </div>
+        </div>
+        <PageButton { ...this.state } pageNext={this.pageNext} />
+        </div>
         );
     }
 }
@@ -301,16 +317,21 @@ Thin(){
         const { idd, name, price, img } = this.props
         let path = '/canteen/detail/'+this.props.name;
         return (
-            <li id={idd} className={this.state.Ison} onMouseOver={this.Thick} onMouseOut={this.Thin}>
-                <br></br>
-                    <div>
-                        <Link to={path}>
-                              <img className="imgSize" src={ img }/>
-                        </Link>
-                        <p>Name:{ name }</p>
-                        <p>Price:{ price }</p>
+          <div className="col-sm-6 col-md-4">
+            <div className="panel panel-default">
+            <div className="panel-body">
+                    <div className={this.state.Ison} onMouseOver={this.Thick} onMouseOut={this.Thin}>
+                      <Link to={path}>
+                            <img className="imgSize" src={ img }/>
+                      </Link>
+                      <div className="caption">
+                        <div className="left"><font style={{fontSize:18}}><span className="label label-warning">Name:{ name }</span></font></div>
+                        <div className="right"><font style={{fontSize:18}}><span className="label label-warning">Price:{ price }</span></font></div>
+                      </div>
                     </div>
-            </li>
+            </div>
+            </div>
+          </div>
         );
     }
 }
@@ -352,11 +373,11 @@ class PageButton extends Component {
     render() {
         return (
             <div>
-            <ul className='pager'>
+            <ul className='pager col-md-12'>
             <li className="previous">
                 <button onClick={ this.setUp } ><span className="glyphicon glyphicon-backward" style={{color:'rgb(251,206,45)'}}>上一页</span></button>
               </li>
-              <li><span>{ this.state.pagenum }页/ { this.props.totalPage }页</span></li>
+              <span>{ this.state.pagenum }页/ { this.props.totalPage }页</span>
                 <li className='next'>
                 <button onClick={ this.setNext }><span className="glyphicon glyphicon-forward" style={{color:"rgb(251,206,45)" }}> 下一页</span></button>
               </li>
@@ -412,14 +433,15 @@ const Detail =({match})=>{
   return(<div>
     <ScrollToTop>
       <h4><font style={{fontSize: 20}}>{match.params.data}</font></h4>
-      <img src={img} />
+      <img className="DetailImageSize" src={img} />
       <p>price:{price}</p>
       <ReviewModel />
+      <br /><br /><br /><br /><br /><br /><br /><br /><br />
       <Stars />
       <br />
       <Others totalnum={Timonum} />
     </ScrollToTop>
-      </div>);
+      </div>)
 }
 
 class Others extends React.Component {
@@ -437,10 +459,14 @@ class Others extends React.Component {
   }
   render(){
     let others = this.state.indexList.map(function (cont){
-      return(<div><Link to={"/canteen/detail/"+cont.name}><img src={cont.img} /></Link><p>name:{cont.name}  price:{cont.price}</p>
-      </div>);
+      return(
+        <div className="col-md-4">
+        <div className="panel panel-default">
+        <div className="panel-body">
+      <Link to={"/canteen/detail/"+cont.name}><img className="imgSize" src={cont.img} /></Link><br/><br/><p><font style={{fontSize:18}}><span className="label label-warning">name:{cont.name}</span>  &nbsp;&nbsp;&nbsp;<span className="label label-warning">price:{cont.price}</span></font></p>
+      </div></div></div>);
     })
-    return(<div><br /><p>其他推荐</p>{others}</div>);
+    return(<div><br /><p><font style={{fontSize:20}}>其他推荐</font></p>{others}</div>);
   }
 }
 class ScrollToTop extends Component {
@@ -455,8 +481,8 @@ class ScrollToTop extends Component {
   }
 }
 const Gallery = () => (
-  <div class="panel panel-default">
-  <div class="panel-body">
+  <div className="panel panel-default">
+  <div className="panel-body">
     <Route component={ModalRouter} />
   </div>
   </div>

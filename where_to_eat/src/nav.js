@@ -7,6 +7,7 @@ import {
   Link
 } from 'react-router-dom'
 import Gallery from './example.js'
+import './nav.css'
 var Data = eval(CanteenData);
 const canteenList = Data.canteens//我们在这个位置导入我们的餐厅的数据
 export class TotalBars extends React.Component {
@@ -14,22 +15,48 @@ export class TotalBars extends React.Component {
     super(props);
   }
   render() {
-    return(<div><img className="img_QNC" src="https://github.com/tx19980520/Where-to-eat/blob/master/pictures/where_to_eat.png?raw=true" /><ul className="nav nav-tabs nav-justified" >
-  <li className="active"><Link to={'/'}>菜品大全</Link></li>
-  <li className='disable'><a href="javascript:alert('敬请期待！');">食堂实况</a></li>
-  <li className='disable'><a href="javascript:alert('敬请期待！');">个性推荐</a></li>
-</ul></div>);
+    return(
+      <div className="col-md-12">
+      <nav className="navbar navbar-inverse" role="navigation">
+	<div className="container-fluid">
+    <div className="navbar-header">
+        <a className="navbar-brand"><Link to={'/'}><span>去哪吃</span></Link></a>
+    </div>
+    <div>
+        <ul className="nav navbar-nav">
+            <li className="active"><Link to={'/'}><span>去哪吃</span></Link></li>
+            <li className='disable'><a href="javascript:alert('敬请期待！');">食堂实况</a></li>
+            <li className='disable'><a href="javascript:alert('敬请期待！');">个性推荐</a></li>
+            <li className="active">
+            <div className="search">
+            <form className="bs-example bs-example-form" >
+            <div className="input-group text-center" style={{ width:200}}>
+            <input type="text" className="form-control" placeholder="search..." />
+            <span className="input-group-btn">
+                 <button className="btn btn-default" type="submit">
+                   search
+                 </button>
+               </span>
+            </div>
+            </form>
+            </div>
+            </li>
+            <li className="active">
+            <a type="button" href="javascript:alert('敬请期待！');">登陆/注册</a>
+            </li>
+        </ul>
+    </div>
+	</div>
+</nav>
+</div>);
   }
-}
+}//对于直接在react中加样式的一个尝试
 var style_list={
     color:'black',
     fontSize:30,
     fontWeight:"normal"
 }
-var img_style={
-  width:400,
-    height:300,
-}
+
 class CanteenImage extends React.Component {
   constructor(props) {
     super(props);
@@ -38,9 +65,11 @@ class CanteenImage extends React.Component {
   render(){
     const { name, img } = this.props;
   return (
-    <div>
-    <Link to={"/canteen"}><img src={img} style={img_style} className="img_CT thumbnail"/></Link>
-    <p className=" text-left " style={style_list}>{name}</p>
+    <div className="panel panel-default">
+    <div className="panel-body">
+    <Link to={"/canteen"}><div className="img_CT"><img src={img} className="CanteenImageSize thumbnail"/></div></Link>
+    <p className="text-center" style={style_list}><span className="label label-warning">{name}</span></p>
+    </div>
     </div>
   );
 }
@@ -48,16 +77,18 @@ class CanteenImage extends React.Component {
 class Canteens extends React.Component {
   render(){
   return (
-    <div>
+    <div className="panel panel-default">
+    <div className="pannel-body">
     <ul>
     {canteenList.map(function (cont) {
         return (
-                <div>
+                <div className="col-sm-6 col-md-4" >
                   <CanteenImage {...cont} />
               </div>)
               })}
             </ul>
-		  </div>);
+		  </div>
+        </div>);
 }
 }
 class CanteenRouter extends React.Component {
@@ -91,10 +122,12 @@ class CanteenRouter extends React.Component {
     ) //###########到这里下面的东西可以开始改了########################
     return ( <div >
       <TotalBars />
+      <div className="col-md-10 col-md-offset-1">
       <Switch location = {isModal ? this.previousLocation : location} >
       <Route exact path='/' component={Canteens}/>
       <Route path='/canteen' component={Gallery}/>
       </Switch>
+      </div>
       </div>
     )
   }

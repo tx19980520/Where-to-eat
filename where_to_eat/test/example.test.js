@@ -3,15 +3,15 @@ import Enzyme from 'enzyme';
 import {shallow, mount, render} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { configure } from 'enzyme';
-import MenuList from './example.js'
-import ListBox from './example.js'
-import PageButton from './example.js'
-import Stars from './example.js'
+import MenuList from '../src/example.js'
+import ListBox from '../src/example.js'
+import PageButton from '../src/example.js'
+import Stars from '../src/example.js'
 import { expect } from 'chai';
 import {Switch,Route,Link} from 'react-router-dom'
-import StarShow from './example.js'
-import CommentList from './example.js'
-import Detail from  './example.js'
+import StarShow from '../src/example.js'
+import CommentList from '../src/example.js'
+import Detail from  '../src/example.js'
 
 configure({ adapter: new Adapter() });
 

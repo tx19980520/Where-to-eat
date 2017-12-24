@@ -27,15 +27,31 @@ ul li a {
 .light {
   background-position: 0 -29px;
 }
-
+.left{
+  text-align: left;
+  position:relative;
+  top:24px;
+}
+.right{
+  text-align: right;
+}
 .imgSize {
-    height: 300px;
-    width: 400px;
+    height: 200px;
+    width: 263px;
 }
-li.ison {
+.OtherImageSize{
+  height: 200px;
+  width: 267px;
+}
+.DetailImageSize{
+  height: 300px;
+  width: 400px;
+}
+.ison {
   border:solid;
-  border-color:rgb(186, 187, 182);
+  border-color:rgb(251, 206, 45);
 }
-li.noton {
-
+.noton {
+  border:solid;
+  border-color:rgb(256, 256, 256);
 }
