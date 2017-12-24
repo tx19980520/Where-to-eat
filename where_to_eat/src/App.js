@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import Catalog from './example.js';
+import Gallery from './example.js';
 
 export default class App extends Component {
 
@@ -8,7 +8,7 @@ export default class App extends Component {
     return (
       <div>
           <h1>Menu</h1>
-          <Catalog/>
+          <Gallery />
       </div>
 
     );

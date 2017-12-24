@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App.js';
+import CanteenGallery from './nav.js'
 import registerServiceWorker from './registerServiceWorker';
 
-ReactDOM.render(<App />, document.getElementById('Menu'));
+ReactDOM.render(<CanteenGallery />, document.getElementById('Main'));
+
 registerServiceWorker();

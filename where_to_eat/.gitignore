@@ -2,7 +2,10 @@
 
 # dependencies
 /node_modules
+<<<<<<< HEAD
 
+=======
+>>>>>>> show_and_review
 
 # testing
 /coverage
